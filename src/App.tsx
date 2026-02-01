@@ -1,38 +1,43 @@
-import { useState } from "react";
-import "./App.css";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-
+import { Button } from "@/components/ui/button";
+import "./index.css";
 import useCountStore from "./store/countStore";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const newCount = useCountStore((state) => state.count);
+  const count = useCountStore((state) => state.count);
+  const increaseCount = useCountStore((state) => state.increaseCount);
+  const decreaseCount = useCountStore((state) => state.decreaseCount);
+  const resetCount = useCountStore((state) => state.resetCount);
+  const doubleCount = useCountStore((state) => state.getDoubleCount());
+
+  // const { count, increaseCount, decreaseCount, resetCount } = useCountStore(
+  //   useShallow((state) => ({
+  //     count: state.count,
+  //     increaseCount: state.increaseCount,
+  //     decreaseCount: state.decreaseCount,
+  //     resetCount: state.resetCount,
+  //   })),
+  // );
 
   return (
     <>
-      <div>
-        <div>{newCount}</div>
+      <div className="flex min-h-svh flex-col items-center justify-center">
+        <div className="mb-8">Count is {count}</div>
+        <div className="mb-8">Double count is {doubleCount}</div>
 
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <div className="flex flex-row items-center justify-center gap-2">
+          <Button variant="secondary" onClick={decreaseCount}>
+            Decrease
+          </Button>
+
+          <Button variant="secondary" onClick={increaseCount}>
+            Increase
+          </Button>
+
+          <Button variant="secondary" onClick={resetCount}>
+            Reset
+          </Button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
